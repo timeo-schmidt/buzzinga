@@ -6,6 +6,7 @@ import requests
 import re
 import uuid
 import math
+import numpy as np
 
 import sounddevice as sd
 
@@ -31,6 +32,7 @@ recording_raw = sd.rec(recording_duration * recording_fs,
 
 sd.wait()  # Wait for recording to finish
 
+recording_flattened = np.reshape(recording_raw, recording_raw.shape[0])
 
 data = {
     "protected": {
