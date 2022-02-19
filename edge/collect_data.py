@@ -27,16 +27,19 @@ emptySignature = ''.join(['0'] * 64)
 # use MAC address of network interface as deviceId
 device_name = ":".join(re.findall('..', '%012x' % uuid.getnode()))
 
+print("Listening ...")
 # Record the audio from the system microphone
 recording_raw = sd.rec(recording_duration * recording_fs,
                        samplerate=recording_fs,
                        channels=recording_channels)
 
 sd.wait()  # Wait for recording to finish
+print("Recording finished.")
 
 recording_flattened = np.reshape(recording_raw, recording_raw.shape[0])
 recording_as_list = recording_flattened.tolist()
 
+print("Sending data to Edge Impulse")
 data = {
     "protected": {
         "ver": "v1",
