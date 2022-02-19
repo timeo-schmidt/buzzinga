@@ -35,7 +35,9 @@ recording_raw = sd.rec(recording_duration * recording_fs,
 sd.wait()  # Wait for recording to finish
 
 recording_flattened = np.reshape(recording_raw, recording_raw.shape[0])
-recording_json = pd.Series(recording_flattened).to_json(orient='values')
+recording_as_list = recording_flattened.tolist()
+
+print(recording_as_list)
 
 data = {
     "protected": {
@@ -47,11 +49,11 @@ data = {
     "payload": {
         "device_name":  device_name,
         "device_type": "Raspberry Pi Zero",
-        "interval_ms": recording_duration,
+        "interval_ms": 1000/44100,
         "sensors": [
             {"name": "USB Microphone", "units": "mV"},
         ],
-        "values": recording_json
+        "values": recording_as_list
     }
 }
 
