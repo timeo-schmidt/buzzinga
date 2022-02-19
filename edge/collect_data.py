@@ -5,9 +5,7 @@ import hashlib
 import requests
 import re
 import uuid
-import math
 import numpy as np
-import pandas as pd
 
 
 import sounddevice as sd
