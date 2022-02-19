@@ -7,6 +7,8 @@ import re
 import uuid
 import math
 import numpy as np
+import pandas as pd
+
 
 import sounddevice as sd
 
@@ -33,6 +35,7 @@ recording_raw = sd.rec(recording_duration * recording_fs,
 sd.wait()  # Wait for recording to finish
 
 recording_flattened = np.reshape(recording_raw, recording_raw.shape[0])
+recording_json = pd.Series(recording_flattened).to_json(orient='values')
 
 data = {
     "protected": {
@@ -48,7 +51,7 @@ data = {
         "sensors": [
             {"name": "USB Microphone", "units": "mV"},
         ],
-        "values": recording_raw
+        "values": recording_json
     }
 }
 
