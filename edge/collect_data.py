@@ -37,8 +37,6 @@ sd.wait()  # Wait for recording to finish
 recording_flattened = np.reshape(recording_raw, recording_raw.shape[0])
 recording_as_list = recording_flattened.tolist()
 
-print(recording_as_list)
-
 data = {
     "protected": {
         "ver": "v1",
