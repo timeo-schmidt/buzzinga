@@ -13,8 +13,8 @@ import pandas as pd
 import sounddevice as sd
 
 # Your API & HMAC keys can be found here (go to your project > Dashboard > Keys to find this)
-HMAC_KEY = "1efc21b2e52e44f1ce178580b0211be3"
-API_KEY = "ei_be9fd126599b573874bec93375762c9a4217094949d63cc5900a32b6d575da77"
+HMAC_KEY = "474583b7218e9637590c70dcd991a4b4"
+API_KEY = "ei_b25f62c7d6f4de0d632c648eec250ff37584f86e59ea2bba5d123393ef7f9ec4"
 
 recording_duration = 2         # The amount of time for wich data is recorded
 recording_channels = 1          # The number of audio channels that are recorded
