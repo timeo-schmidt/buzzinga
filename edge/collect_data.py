@@ -7,12 +7,16 @@ import re
 import uuid
 import math
 
-import pyaudio
-import wave
+import sounddevice as sd
 
 # Your API & HMAC keys can be found here (go to your project > Dashboard > Keys to find this)
 HMAC_KEY = "1efc21b2e52e44f1ce178580b0211be3"
 API_KEY = "ei_be9fd126599b573874bec93375762c9a4217094949d63cc5900a32b6d575da77"
+
+recording_duration = 2         # The amount of time for wich data is recorded
+recording_channels = 1          # The number of audio channels that are recorded
+recording_fs = 44100            # The sample rate / frequency of the recording
+
 
 # empty signature (all zeros). HS256 gives 32 byte signature, and we encode in hex, so we need 64 characters here
 emptySignature = ''.join(['0'] * 64)
@@ -20,26 +24,12 @@ emptySignature = ''.join(['0'] * 64)
 # use MAC address of network interface as deviceId
 device_name = ":".join(re.findall('..', '%012x' % uuid.getnode()))
 
-# Time window on which the algorithm runs.
-SOUND_SAMPLE_WINDOW = 2000  # in ms
-CHUNK = 1024
-FORMAT = pyaudio.paInt16
-CHANNELS = 1
-RATE = 44100
+# Record the audio from the system microphone
+recording_raw = sd.rec(recording_duration * recording_fs,
+                       samplerate=recording_fs,
+                       channels=recording_channels)
 
-p = pyaudio.PyAudio()
-
-stream = p.open(format=FORMAT,
-                channels=CHANNELS,
-                rate=RATE,
-                input=True,
-                frames_per_buffer=CHUNK)
-
-
-frames = []
-for i in range(0, int(RATE / CHUNK * SOUND_SAMPLE_WINDOW)):
-    data = stream.read(CHUNK)
-    frames.append(data)
+sd.wait()  # Wait for recording to finish
 
 
 data = {
@@ -52,11 +42,11 @@ data = {
     "payload": {
         "device_name":  device_name,
         "device_type": "Raspberry Pi Zero",
-        "interval_ms": SOUND_SAMPLE_WINDOW,
+        "interval_ms": recording_duration,
         "sensors": [
             {"name": "USB Microphone", "units": "mV"},
         ],
-        "values": frames
+        "values": recording_raw
     }
 }
 
