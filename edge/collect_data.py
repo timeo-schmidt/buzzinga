@@ -1,0 +1,86 @@
+import json
+import time
+import hmac
+import hashlib
+import requests
+import re
+import uuid
+import math
+
+import pyaudio
+import wave
+
+# Your API & HMAC keys can be found here (go to your project > Dashboard > Keys to find this)
+HMAC_KEY = "1efc21b2e52e44f1ce178580b0211be3"
+API_KEY = "ei_be9fd126599b573874bec93375762c9a4217094949d63cc5900a32b6d575da77"
+
+# empty signature (all zeros). HS256 gives 32 byte signature, and we encode in hex, so we need 64 characters here
+emptySignature = ''.join(['0'] * 64)
+
+# use MAC address of network interface as deviceId
+device_name = ":".join(re.findall('..', '%012x' % uuid.getnode()))
+
+# Time window on which the algorithm runs.
+SOUND_SAMPLE_WINDOW = 2000  # in ms
+CHUNK = 1024
+FORMAT = pyaudio.paInt16
+CHANNELS = 1
+RATE = 44100
+
+p = pyaudio.PyAudio()
+
+stream = p.open(format=FORMAT,
+                channels=CHANNELS,
+                rate=RATE,
+                input=True,
+                frames_per_buffer=CHUNK)
+
+
+frames = []
+for i in range(0, int(RATE / CHUNK * SOUND_SAMPLE_WINDOW)):
+    data = stream.read(CHUNK)
+    frames.append(data)
+
+
+data = {
+    "protected": {
+        "ver": "v1",
+        "alg": "HS256",
+        "iat": time.time()  # epoch time, seconds since 1970
+    },
+    "signature": emptySignature,
+    "payload": {
+        "device_name":  device_name,
+        "device_type": "Raspberry Pi Zero",
+        "interval_ms": SOUND_SAMPLE_WINDOW,
+        "sensors": [
+            {"name": "USB Microphone", "units": "mV"},
+        ],
+        "values": frames
+    }
+}
+
+
+# encode in JSON
+encoded = json.dumps(data)
+
+# sign message
+signature = hmac.new(bytes(HMAC_KEY, 'utf-8'),
+                     msg=encoded.encode('utf-8'), digestmod=hashlib.sha256).hexdigest()
+
+# set the signature again in the message, and encode again
+data['signature'] = signature
+encoded = json.dumps(data)
+
+# and upload the file
+res = requests.post(url='https://ingestion.edgeimpulse.com/api/training/data',
+                    data=encoded,
+                    headers={
+                        'Content-Type': 'application/json',
+                        'x-file-name': 'idle01',
+                        'x-api-key': API_KEY
+                    })
+if (res.status_code == 200):
+    print('Uploaded file to Edge Impulse', res.status_code, res.content)
+else:
+    print('Failed to upload file to Edge Impulse', res.status_code, res.content)
