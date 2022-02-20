@@ -14,7 +14,7 @@ import sounddevice as sd
 HMAC_KEY = "474583b7218e9637590c70dcd991a4b4"
 API_KEY = "ei_b25f62c7d6f4de0d632c648eec250ff37584f86e59ea2bba5d123393ef7f9ec4"
 
-recording_duration = 2         # The amount of time for wich data is recorded
+recording_duration = 5         # The amount of time for wich data is recorded
 recording_channels = 1          # The number of audio channels that are recorded
 recording_fs = 44100            # The sample rate / frequency of the recording
 
