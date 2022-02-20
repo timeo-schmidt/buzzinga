@@ -19,11 +19,9 @@ CFLAGS += -Wno-strict-aliasing      # Disable warnings about strict aliasing
 CFLAGS += -Os                       # Optimize for size
 CFLAGS += -DNDEBUG                  # Disable assert() macro
 CFLAGS += -DEI_CLASSIFIER_ENABLE_DETECTION_POSTPROCESS_OP   # Add TFLite_Detection_PostProcess operation
-CFLAGS += -mcpu=arm1176jzf-s -mfpu=vfp
 
 # C++ only compiler flags
 CXXFLAGS += -std=c++14              # Use C++14 standard
-CXXFLAGS += -mcpu=arm1176jzf-s -mfpu=vfp
 
 # Linker flags
 LDFLAGS += -lm                      # Link to math.h
