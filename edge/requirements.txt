@@ -1,6 +1,4 @@
 matplotlib==3.5.1
 numpy==1.20.3
-pandas==1.4.1
-requests==2.26.0
 scipy==1.7.2
 sounddevice==0.4.4
