@@ -9,8 +9,11 @@
 # This command installs all the necessary script requirements
 pip install -r requirements.txt
 
+# Install the edge impulse CLI
+npm install -g edge-impulse-cli --force
+
 # To start a new recording session, run
-# 
+#
 python3 record_data.py
 
 # To synchronise your local data with Edge Impulse, run
