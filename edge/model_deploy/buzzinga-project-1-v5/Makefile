@@ -1,5 +1,5 @@
 # Tool macros
-CC ?= gcc
+CC ?= arm-linux-gnueabi-gcc
 CXX ?= g++
 
 # Settings
@@ -8,6 +8,9 @@ BUILD_PATH = ./build
 
 # Location of main.cpp (must use C++ compiler for main)
 CXXSOURCES = source/main.cpp
+
+# Compile for the Raspberry Pi Zero Target
+CFLAGS += -march=armv6 
 
 # Search path for header files (current directory)
 CFLAGS += -I.
