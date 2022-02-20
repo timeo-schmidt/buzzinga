@@ -7,9 +7,9 @@ import time
 DATA_DIR = './local_data/'  # File name to save
 API_KEY = ""
 MAX_COLLECTIONS = 100
-wave_length = 5  # Recording length (seconds)
+wave_length = 240  # Recording length (seconds)
 sample_rate = 44100  # Sampling frequency
-WAIT_TIME = 5
+WAIT_TIME = 2
 
 # This will continuously record data until key s is pressed
 while True:
