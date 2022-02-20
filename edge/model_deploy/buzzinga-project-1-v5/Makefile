@@ -1,5 +1,5 @@
 # Tool macros
-CC ?= arm-linux-gnueabi-gcc
+CC ?= gcc
 CXX ?= g++
 
 # Settings
@@ -8,9 +8,6 @@ BUILD_PATH = ./build
 
 # Location of main.cpp (must use C++ compiler for main)
 CXXSOURCES = source/main.cpp
-
-# Compile for the Raspberry Pi Zero Target
-CFLAGS += -march=armv6 
 
 # Search path for header files (current directory)
 CFLAGS += -I.
@@ -22,9 +19,11 @@ CFLAGS += -Wno-strict-aliasing      # Disable warnings about strict aliasing
 CFLAGS += -Os                       # Optimize for size
 CFLAGS += -DNDEBUG                  # Disable assert() macro
 CFLAGS += -DEI_CLASSIFIER_ENABLE_DETECTION_POSTPROCESS_OP   # Add TFLite_Detection_PostProcess operation
+CFLAGS += -mcpu=arm1176jzf-s -mfpu=vfp
 
 # C++ only compiler flags
 CXXFLAGS += -std=c++14              # Use C++14 standard
+CXXFLAGS += -mcpu=arm1176jzf-s -mfpu=vfp
 
 # Linker flags
 LDFLAGS += -lm                      # Link to math.h
