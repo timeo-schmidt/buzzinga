@@ -83,6 +83,7 @@ Let's explain what each entry is in a bit more details:
 The black notification is the Pop-up notification from Android, and in the background in the app, with the white message that is associated to the notification.
 
 <br/>
+<br/>
 
 ### 4. Sending the message to a topic
 
