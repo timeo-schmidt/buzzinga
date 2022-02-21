@@ -80,7 +80,7 @@ Let's explain what each entry is in a bit more details:
 - `"author"` : this is the `deviceID` of the device that sent the message, but it is not diplayed in the app. More details on `devideID`s will be given in the next section.
 
 <img src="./FCM_notifications_screenshot.jpg" alt="screenshot" width="300"/>
-The black notification is the Pop-up notification from Android, and in the background in the app, with the white message that is associated to the notification.
+The black notification is the Pop-up notification from Android, and in the background is the app with the white message that is created from the payload.
 
 <br/>
 <br/>
