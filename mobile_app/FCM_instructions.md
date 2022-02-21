@@ -52,12 +52,14 @@ message_body = "Notification Body"
 #### Secondly, create the data payload to be passed onto the app
 
 The payload is a Python dictionary with `strings` as keys, and as the app also needs `strings` for the values, we get:
+```python
 data_message = {                  
     "title" : "Title",
     "content" : "Content",
     "category" : "Category",
     "author" : "Author"
 }
+```
 
 Let's explain what each entry is in a bit more details:
 - `"title"` : this is the title of the message displayed in the app
