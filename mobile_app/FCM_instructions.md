@@ -36,8 +36,8 @@ push_service = FCMNotification(api_key="AAAAKj2r-d0:APA91bEbp-oXiE9u7ubZjdvm2zJ8
 ### 3. Creating a message to send
 
 FCM handles 2 types of notifications/messages :
- - Proper notifications that get displayed on the user's phone (like pop-up notifications from WhatsApp)
- - Data-only messages that just send a payload to the app directly (like a MQTT message)
+- Proper notifications that get displayed on the user's phone (like pop-up notifications from WhatsApp)
+- Data-only messages that just send a payload to the app directly (like a MQTT message)
 
 We want to do both, and thankfully this is easily done by just giving the two to the FCM service.
 
@@ -60,10 +60,10 @@ data_message = {
 }
 
 Let's explain what each entry is in a bit more details:
-    - `"title"` : this is the title of the message displayed in the app
-    - `"content"` : this is the content of the message displayed in the app (so far so good)
-    - `"category"` : the category of the message is displayed right before the title of the message, please refer to the screenshot below to understand the layout more easily
-    - `"author"` : this is the `deviceID` of the device that sent the message, but it is not diplayed in the app. More details on `devideID`s will be given in the next section.
+- `"title"` : this is the title of the message displayed in the app
+- `"content"` : this is the content of the message displayed in the app (so far so good)
+- `"category"` : the category of the message is displayed right before the title of the message, please refer to the screenshot below to understand the layout more easily
+- `"author"` : this is the `deviceID` of the device that sent the message, but it is not diplayed in the app. More details on `devideID`s will be given in the next section.
 
 ![screenshot](./FCM_notifications_screenshot.jpg)
 The black notification is the Pop-up notification from Android, and in the background in the app, with the white message that is associated to the notification.
