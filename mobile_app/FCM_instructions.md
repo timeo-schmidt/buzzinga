@@ -51,7 +51,7 @@ FCM handles 2 types of notifications/messages :
 We want to do both, and thankfully this is easily done by just giving the two to the FCM service.
 
 
-#### First, create a display notification
+#### a. Create a display notification
 
 The app already takes care of the icon of the notification, so all we have to do is give it a title and a body:
 ```python
@@ -60,7 +60,7 @@ message_body = "Notification Body"
 ```
 
 
-#### Secondly, create the data payload to be passed onto the app
+#### b. Create the data payload to be passed onto the app
 
 The payload is a Python dictionary with `strings` as keys, and as the app also needs `strings` for the values, we get:
 ```python
@@ -78,14 +78,14 @@ Let's explain what each entry is in a bit more details:
 - `"category"` : the category of the message is displayed right before the title of the message, please refer to the screenshot below to understand the layout more easily
 - `"author"` : this is the `deviceID` of the device that sent the message, but it is not diplayed in the app. More details on `devideID`s will be given in the next section.
 
-<img src="./FCM_notifications_screenshot.jpg" alt="screenshot" width="200"/>
+<img src="./FCM_notifications_screenshot.jpg" alt="screenshot" width="300"/>
 The black notification is the Pop-up notification from Android, and in the background in the app, with the white message that is associated to the notification.
 
 
 
 ### 4. Sending the message to a topic
 
-#### Choosing a topic
+#### a. Choosing a topic
 
 First define a topic to send the message to:
 ```python
@@ -99,7 +99,7 @@ The exact `<category>` is not *that* important, but it should be the same betwee
 
 *Note: `<category>` should be the same as the `'category':` entry of the message defined earlier, but formatted in a continuous string, so for example `fire_alarm` instead of `'Fire Alarm'`.*
 
-#### Sending the message
+#### b. Sending the message
 
 Given a topic, the message and payload can then be sent using the following function:
 ```python
