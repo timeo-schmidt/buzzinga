@@ -3,17 +3,16 @@
 These are the instructions to follow in order to send messages to the app using FCM.
 There is also a [FCM_demo.py](./FCM_demo.py) script that compiles what is written here and should be easy to upgrade for whatever messages you need to send.
 
-
+<br/>
 
 ## What is FCM?
 
 Firebase Cloud Messaging is a Google service used to send notifications and data payloads to remote devices using publish-subscribe model, like the MQTT protocol.
 This is what is used in the Notisound app to receive messages from the Raspberry PIs.
 
-
+<br/>
 
 ## How to send a message ?
-
 
 ### 1. Installing the relevant library
 
@@ -26,7 +25,7 @@ $ pip3 install pyfcm
 ```
 *If that doesn't work, try with `pip` instead of `pip3`.*
 
-
+<br/>
 
 ### 2. Initializing the FCM service
 
@@ -40,7 +39,7 @@ We can then initialize the service by giving it the Firebase Project API key:
 push_service = FCMNotification(api_key="AAAAKj2r-d0:APA91bEbp-oXiE9u7ubZjdvm2zJ8C_ZyCu-HnNACwiGRoRRip5GpRXBq7_v68zN-VQ4FP_tEsdkzj3SINnT6EBVN7NP9_VbfuVlN7y4x8x8z-uipPq_9upZTXyyrqik9Yh2mJKEBsj0o")
 ```
 
-
+<br/>
 
 ### 3. Creating a message to send
 
@@ -50,6 +49,7 @@ FCM handles 2 types of notifications/messages :
 
 We want to do both, and thankfully this is easily done by just giving the two to the FCM service.
 
+<br/>
 
 #### a. Create a display notification
 
@@ -59,6 +59,7 @@ message_title = "Notification Title"
 message_body = "Notification Body"
 ```
 
+<br/>
 
 #### b. Create the data payload to be passed onto the app
 
@@ -81,7 +82,7 @@ Let's explain what each entry is in a bit more details:
 <img src="./FCM_notifications_screenshot.jpg" alt="screenshot" width="300"/>
 The black notification is the Pop-up notification from Android, and in the background in the app, with the white message that is associated to the notification.
 
-
+<br/>
 
 ### 4. Sending the message to a topic
 
@@ -98,6 +99,8 @@ For example, a device with `deviceID = abc123` could be placed near a smoke dete
 The exact `<category>` is not *that* important, but it should be the same between **all devices**, and between **all messages related to that category** that are sent: you can't have one device sending to `abc123_smoke_detector` and the other one sending to `def456_fire_alarm` for messages both related to a smoke detector going off.
 
 *Note: `<category>` should be the same as the `'category':` entry of the message defined earlier, but formatted in a continuous string, so for example `fire_alarm` instead of `'Fire Alarm'`.*
+
+<br/>
 
 #### b. Sending the message
 
