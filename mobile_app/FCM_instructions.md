@@ -4,10 +4,12 @@ These are the instructions to follow in order to send messages to the app using 
 There is also a [FCM_demo.py](./FCM_demo.py) script that compiles what is written here and should be easy to upgrade for whatever messages you need to send.
 
 
+
 ## What is FCM?
 
 Firebase Cloud Messaging is a Google service used to send notifications and data payloads to remote devices using publish-subscribe model, like the MQTT protocol.
 This is what is used in the Notisound app to receive messages from the Raspberry PIs.
+
 
 
 ## How to send a message ?
@@ -25,6 +27,7 @@ $ pip3 install pyfcm
 *If that doesn't work, try with `pip` instead of `pip3`.*
 
 
+
 ### 2. Initializing the FCM service
 
 Once the library has been installed, you can import it in a Python script as follows:
@@ -36,6 +39,7 @@ We can then initialize the service by giving it the Firebase Project API key:
 ```python
 push_service = FCMNotification(api_key="AAAAKj2r-d0:APA91bEbp-oXiE9u7ubZjdvm2zJ8C_ZyCu-HnNACwiGRoRRip5GpRXBq7_v68zN-VQ4FP_tEsdkzj3SINnT6EBVN7NP9_VbfuVlN7y4x8x8z-uipPq_9upZTXyyrqik9Yh2mJKEBsj0o")
 ```
+
 
 
 ### 3. Creating a message to send
@@ -78,6 +82,7 @@ Let's explain what each entry is in a bit more details:
 The black notification is the Pop-up notification from Android, and in the background in the app, with the white message that is associated to the notification.
 
 
+
 ### 4. Sending the message to a topic
 First define a topic to send the message to:
 ```python
@@ -86,7 +91,8 @@ topic_name = "test_test"
 
 All topics are in the format `<deviceID>_<category>` where `<deviceID>` is the unique ID of the physical device that you want to subscribe to (like a serial number), and `<category>` is the category of the messages that you want to receive from that device.
 
-For example, a device with `deviceID = abc123` could be placed near a smoke detector. Therefore, every messages related to that should be sent to the topic `abc123_smoke_detector`. The exact `<category>` is not *that* important, but it should be the same between **all devices**, and between **all messages related to that category** that are sent: you can't have one device sending to `abc123_smoke_detector` and the other one sending to `def456_fire_alarm` for messages both related to a smoke detector going off.
+For example, a device with `deviceID = abc123` could be placed near a smoke detector. Therefore, every messages related to that should be sent to the topic `abc123_smoke_detector`.
+The exact `<category>` is not *that* important, but it should be the same between **all devices**, and between **all messages related to that category** that are sent: you can't have one device sending to `abc123_smoke_detector` and the other one sending to `def456_fire_alarm` for messages both related to a smoke detector going off.
 
 *Note: `<category>` should be the same as the `'category':` entry of the message defined earlier, but formatted in a continuous string, so for example `fire_alarm` instead of `'Fire Alarm'`.*
 
@@ -96,4 +102,4 @@ result = push_service.notify_topic_subscribers(topic_name=topic_name, message_bo
 ```
 where we have set `content_available=True` for background messages to work on iOS.
 
-*Note: storing the result of the `push_service.notify_topic_subscribers` is not needed, but it can be printed out (with `print(result)`) to check that the message was correctly sent, and help with debugging.*
+*Note: storing the result of the `push_service.notify_topic_subscribers` is not needed, but it can be printed out with `print(result)` to check that the message was correctly sent, and help with debugging.*
