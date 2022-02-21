@@ -78,12 +78,15 @@ Let's explain what each entry is in a bit more details:
 - `"category"` : the category of the message is displayed right before the title of the message, please refer to the screenshot below to understand the layout more easily
 - `"author"` : this is the `deviceID` of the device that sent the message, but it is not diplayed in the app. More details on `devideID`s will be given in the next section.
 
-![screenshot](./FCM_notifications_screenshot.jpg)
+<img src="./FCM_notifications_screenshot.jpg" alt="screenshot" width="200"/>
 The black notification is the Pop-up notification from Android, and in the background in the app, with the white message that is associated to the notification.
 
 
 
 ### 4. Sending the message to a topic
+
+#### Choosing a topic
+
 First define a topic to send the message to:
 ```python
 topic_name = "test_test"
@@ -95,6 +98,8 @@ For example, a device with `deviceID = abc123` could be placed near a smoke dete
 The exact `<category>` is not *that* important, but it should be the same between **all devices**, and between **all messages related to that category** that are sent: you can't have one device sending to `abc123_smoke_detector` and the other one sending to `def456_fire_alarm` for messages both related to a smoke detector going off.
 
 *Note: `<category>` should be the same as the `'category':` entry of the message defined earlier, but formatted in a continuous string, so for example `fire_alarm` instead of `'Fire Alarm'`.*
+
+#### Sending the message
 
 Given a topic, the message and payload can then be sent using the following function:
 ```python
