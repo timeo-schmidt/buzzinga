@@ -1,13 +1,13 @@
 # Sending messages to the Notisound app using FCM
 
 These are the instructions to follow in order to send messages to the app using FCM.
-There is also a [FCM_demo.py](./FCM_demo.py) script that compiles what is written here and should be easy to upgrade for whatever messages you need to send.
+There is also a [FCM_demo.py](./FCM_demo.py) script that compiles what is written here and should be easy to adapt for whatever messages you need to send.
 
 <br/>
 
 ## What is FCM?
 
-Firebase Cloud Messaging is a Google service used to send notifications and data payloads to remote devices using publish-subscribe model, like the MQTT protocol.
+Firebase Cloud Messaging (FCM) is a Google service used to send notifications and data payloads to remote devices using a publish-subscribe model, just like the MQTT protocol.
 This is what is used in the Notisound app to receive messages from the Raspberry PIs.
 
 <br/>
