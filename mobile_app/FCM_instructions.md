@@ -3,12 +3,15 @@
 These are the instructions to follow in order to send messages to the app using FCM.
 There is also a [FCM_demo.py](./FCM_demo.py) script that compiles what is written here and should be easy to upgrade for whatever messages you need to send.
 
+
 ## What is FCM?
 
 Firebase Cloud Messaging is a Google service used to send notifications and data payloads to remote devices using publish-subscribe model, like the MQTT protocol.
 This is what is used in the Notisound app to receive messages from the Raspberry PIs.
 
+
 ## How to send a message ?
+
 
 ### 1. Installing the relevant library
 
@@ -20,6 +23,7 @@ To do so, run the following command in a terminal:
 $ pip3 install pyfcm
 ```
 *If that doesn't work, try with `pip` instead of `pip3`.*
+
 
 ### 2. Initializing the FCM service
 
@@ -33,6 +37,7 @@ We can then initialize the service by giving it the Firebase Project API key:
 push_service = FCMNotification(api_key="AAAAKj2r-d0:APA91bEbp-oXiE9u7ubZjdvm2zJ8C_ZyCu-HnNACwiGRoRRip5GpRXBq7_v68zN-VQ4FP_tEsdkzj3SINnT6EBVN7NP9_VbfuVlN7y4x8x8z-uipPq_9upZTXyyrqik9Yh2mJKEBsj0o")
 ```
 
+
 ### 3. Creating a message to send
 
 FCM handles 2 types of notifications/messages :
@@ -41,6 +46,7 @@ FCM handles 2 types of notifications/messages :
 
 We want to do both, and thankfully this is easily done by just giving the two to the FCM service.
 
+
 #### First, create a display notification
 
 The app already takes care of the icon of the notification, so all we have to do is give it a title and a body:
@@ -48,6 +54,7 @@ The app already takes care of the icon of the notification, so all we have to do
 message_title = "Notification Title"
 message_body = "Notification Body"
 ```
+
 
 #### Secondly, create the data payload to be passed onto the app
 
@@ -69,6 +76,7 @@ Let's explain what each entry is in a bit more details:
 
 ![screenshot](./FCM_notifications_screenshot.jpg)
 The black notification is the Pop-up notification from Android, and in the background in the app, with the white message that is associated to the notification.
+
 
 ### 4. Sending the message to a topic
 First define a topic to send the message to:
