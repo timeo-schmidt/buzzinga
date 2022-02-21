@@ -9,8 +9,8 @@
 # This command installs all the necessary script requirements
 pip install -r requirements.txt
 
-# Install the edge impulse CLI
-npm install -g edge-impulse-cli --force
+# Install the edge impulse CLI - # throws a permission error with
+sudo npm install -g edge-impulse-cli --force
 
 # To start a new recording session, run
 #
