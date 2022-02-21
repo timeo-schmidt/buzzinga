@@ -1,13 +1,23 @@
 ## Deployment steps
 
 ```bash
-$ git clone https://github.com/edgeimpulse/example-standalone-inferencing-linux
-$ cd example-standalone-inferencing-linux && git submodule update --init --recursive
-$ sudo apt install libasound2
+# There is no out-of-the-box support for the Raspberry Pi Zero (Arm6)
+# You have to export the trained model from the web interface
+# Go to the Edge Impulse Web interface > Deployment > Export C++ Library
+# Unzip and move the folder to your target
 
-# Copy the folders of the exported C++ library into the root folder of this new repo
-$ cp -r  ../buzzinga-project-1-v5/* ./
+# ...
+# Write the code that is running together with the model library
+# Adjust the Makefile if necessary
+# ...
 
-# Build a model file by running this command in the example-standalone-inferencing-linux/ folder
-$ APP_EIM=1 make -j
+# Add the Makefile and main.c to the project
+$ cp -R ./deployment_pieces/* ./buzzinga-project-1-v5/
+$ cd ./buzzinga-project-1-v5
+
+# Compile the library together with your custom source
+$ make -j 2 # Do not use more cores, this will cause errors
+
+# Execute and test your compilation
+$ ./build/app
 ```
