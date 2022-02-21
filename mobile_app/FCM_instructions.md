@@ -16,7 +16,7 @@ This is what is used in the Notisound app to receive messages from the Raspberry
 
 To use FCM, you need to install the `PyFCM` library on the device (either your laptop for testing, or the Raspberry Pi for the final product).
 To do so, run the following command in a terminal:
-```console
+```terminal
 $ pip3 install pyfcm
 ```
 *If that doesn't work, try with `pip` instead of `pip3`.*
