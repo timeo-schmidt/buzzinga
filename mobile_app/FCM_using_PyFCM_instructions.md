@@ -1,7 +1,7 @@
-# Sending messages to the Notisound app using FCM
+# Sending FCM messages to the Notisound app using PyFCM
 
 These are the instructions to follow in order to send messages to the app using FCM.
-There is also a [FCM_demo.py](./FCM_demo.py) script that compiles what is written here and should be easy to adapt for whatever messages you need to send.
+There is also a [demo python script](./FCM_using_PyFCM.py) that compiles what is written here and should be easy to adapt for whatever messages you need to send.
 
 <br/>
 
@@ -36,7 +36,7 @@ from pyfcm import FCMNotification
 
 We can then initialize the service by giving it the Firebase Project API key:
 ```python
-push_service = FCMNotification(api_key="AAAAKj2r-d0:APA91bEbp-oXiE9u7ubZjdvm2zJ8C_ZyCu-HnNACwiGRoRRip5GpRXBq7_v68zN-VQ4FP_tEsdkzj3SINnT6EBVN7NP9_VbfuVlN7y4x8x8z-uipPq_9upZTXyyrqik9Yh2mJKEBsj0o")
+push_service = FCMNotification(api_key= <api_key_here>)
 ```
 
 <br/>
@@ -79,7 +79,7 @@ Let's explain what each entry is in a bit more details:
 - `"category"` : the category of the message is displayed right before the title of the message, please refer to the screenshot below to understand the layout more easily
 - `"author"` : this is the `deviceID` of the device that sent the message, but it is not diplayed in the app. More details on `devideID`s will be given in the next section.
 
-<img src="./FCM_notifications_screenshot.jpg" alt="screenshot" width="300"/>
+<img src="./FCM_using_PyFCM_notifications_screenshot.jpg" alt="screenshot of the two types of notifications" width="300"/>
 The black notification is the Pop-up notification from Android, and in the background is the app with the white message that is created from the payload.
 
 <br/>
