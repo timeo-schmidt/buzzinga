@@ -1,4 +1,7 @@
 #include <stdio.h>
+#include <iostream>
+#define PY_SSIZE_T_CLEAN
+#include <Python.h>
 
 #include "edge-impulse-sdk/classifier/ei_run_classifier.h"
 
@@ -35,13 +38,14 @@ int main(int argc, char **argv) {
     // Perform DSP pre-processing and inference
     res = run_classifier(&signal, &result, false);
 
+    /*
     // Print return code and how long it took to perform inference
     printf("run_classifier returned: %d\r\n", res);
     printf("Timing: DSP %d ms, inference %d ms, anomaly %d ms\r\n",
             result.timing.dsp,
             result.timing.classification,
             result.timing.anomaly);
-
+    */
     // Print the prediction results (object detection)
 #if EI_CLASSIFIER_OBJECT_DETECTION == 1
     printf("Object detection bounding boxes:\r\n");
@@ -61,10 +65,44 @@ int main(int argc, char **argv) {
 
     // Print the prediction results (classification)
 #else
-    printf("Predictions:\r\n");
+    //printf("Predictions:\r\n");
     for (uint16_t i = 0; i < EI_CLASSIFIER_LABEL_COUNT; i++) {
-        printf("  %s: ", ei_classifier_inferencing_categories[i]);
-        printf("%.5f\r\n", result.classification[i].value);
+        
+        if (result.classification[i].value >= 0.9 && ei_classifier_inferencing_categories[i] == "dong"){
+            printf("  %s: ", ei_classifier_inferencing_categories[i]);
+            printf("%.5f\r\n", result.classification[i].value);
+
+            printf("begin... \n");
+            Py_Initialize();
+            char filename[] = "FCM_dong.py";
+            FILE* fp;
+            // Open the file, and run it
+            fp = _Py_fopen(filename, "r");
+            PyRun_SimpleFile(fp, filename);
+            printf("...closing \n");
+            //Close the python instance
+            Py_Finalize();
+        }
+        else if(result.classification[i].value >= 0.8 && ei_classifier_inferencing_categories[i] == "firealarm"){
+            printf("  %s: ", ei_classifier_inferencing_categories[i]);
+            printf("%.5f\r\n", result.classification[i].value);
+
+            printf("begin... \n");
+            Py_Initialize();
+            char filename[] = "FCM_firealarm.py";
+            FILE* fp;
+            // Open the file, and run it
+            fp = _Py_fopen(filename, "r");
+            PyRun_SimpleFile(fp, filename);
+            printf("...closing \n");
+            //Close the python instance
+            Py_Finalize();
+
+        }else if(result.classification[i].value >= 0.9 && ei_classifier_inferencing_categories[i] == "noise"){
+            printf("  %s: ", ei_classifier_inferencing_categories[i]);
+            printf("%.5f\r\n", result.classification[i].value);
+            return 1;
+        }
     }
 #endif
 

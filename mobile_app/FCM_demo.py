@@ -8,14 +8,14 @@ from pyfcm import FCMNotification
 push_service = FCMNotification(api_key="AAAAKj2r-d0:APA91bEbp-oXiE9u7ubZjdvm2zJ8C_ZyCu-HnNACwiGRoRRip5GpRXBq7_v68zN-VQ4FP_tEsdkzj3SINnT6EBVN7NP9_VbfuVlN7y4x8x8z-uipPq_9upZTXyyrqik9Yh2mJKEBsj0o")
 
 # Sending a visible device notification (this is what the user will see in the POP-UP NOTIFICATION / in his NOTIFICATION CENTRE)
-message_title = "Notification Title"
-message_body = "Notification Body"
+message_title = "Bertil is gay" #doorbell
+message_body = "please leave"  #
 
 # ... with data message payload (this is what the user will see IN THE APP)
 data_message = {                  
-    "title" : "Title",
-    "content" : "Content",
-    "category" : "Category",
+    "title" : message_title,
+    "content" : message_body,
+    "category" : "gay_alarm",
     "author" : "Author"
 }
 

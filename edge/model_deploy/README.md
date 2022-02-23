@@ -13,6 +13,11 @@
 
 # Add the Makefile and main.c to the project
 $ cp -R ./deployment_pieces/* ./buzzinga-project-1-v5/
+
+# Add the python scripts for Firebase Cloud Messaging to the project
+$ cp -R ./FSM_notifications/* ./buzzinga-project-1-v5/
+
+# Go to the project directory 
 $ cd ./buzzinga-project-1-v5
 
 # Compile the library together with your custom source
