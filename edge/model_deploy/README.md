@@ -17,6 +17,10 @@ $ cp -R ./deployment_pieces/* ./buzzinga-project-1-v5/
 # Add the python scripts for Firebase Cloud Messaging to the project
 $ cp -R ./FSM_notifications/* ./buzzinga-project-1-v5/
 
+# Make sure to install the requests library in order to execute HTTP requests
+# by running:       
+$ pip3 install requests
+
 # Go to the project directory 
 $ cd ./buzzinga-project-1-v5
 
