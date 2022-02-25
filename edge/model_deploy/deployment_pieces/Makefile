@@ -11,9 +11,7 @@ CXXSOURCES = source/main.cpp
 
 # Search path for header files (current directory)
 CFLAGS += -I.
-CFLAGS +=-I/usr/include/python3.9
-
-
+CFLAGS += -I/usr/include/python3.9
 
 # C and C++ Compiler flags
 CFLAGS += -Wall                     # Include all warnings
@@ -30,6 +28,7 @@ CXXFLAGS += -std=c++14              # Use C++14 standard
 LDFLAGS += -lm                      # Link to math.h
 LDFLAGS += -lstdc++                 # Link to stdc++.h
 LDFLAGS += -lpython3.9
+LDFLAGS += -lasound
 
 # Include C source code for required libraries
 CSOURCES += $(wildcard edge-impulse-sdk/CMSIS/DSP/Source/TransformFunctions/*.c) \

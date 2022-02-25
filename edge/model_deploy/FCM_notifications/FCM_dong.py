@@ -58,5 +58,5 @@ response = requests.post("https://fcm.googleapis.com/fcm/send",headers = headers
 
 
 # Print the response from the server
-print("Response code from the server: \t\t" + str(response.status_code))
-print("Response message from the server: \t" + str(response.json()))
+#print("Response code from the server: \t\t" + str(response.status_code))
+#print("Response message from the server: \t" + str(response.json()))
