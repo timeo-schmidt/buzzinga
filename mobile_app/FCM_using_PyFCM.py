@@ -20,7 +20,7 @@ data_message = {
 }
 
 # ... to devices subscribed to a topic.
-topic_name = "test_test"
+topic_name = "test_doorbell"
 result = push_service.notify_topic_subscribers(topic_name=topic_name, message_body=message_body, message_title=message_title, data_message=data_message, content_available=True)
 
 print(result)
