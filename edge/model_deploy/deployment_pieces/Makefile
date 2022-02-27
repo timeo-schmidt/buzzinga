@@ -29,7 +29,6 @@ LDFLAGS += -lm                      # Link to math.h
 LDFLAGS += -lstdc++                 # Link to stdc++.h
 LDFLAGS += -lpython3.9              # Link to Python.h
 LDFLAGS += -lasound                 # Link to asoundlib.h
-LDFLAGS += -lpthread
 
 # Include C source code for required libraries
 CSOURCES += $(wildcard edge-impulse-sdk/CMSIS/DSP/Source/TransformFunctions/*.c) \
