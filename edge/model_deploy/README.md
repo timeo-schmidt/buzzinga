@@ -28,7 +28,7 @@ $ cp -R ./FCM_notifications/* ./buzzinga-project-1-v8/
 $ sudo pip3 install requests
 
 # Go to the project directory 
-$ cd ./buzzinga-project-1-v5
+$ cd ./buzzinga-project-1-v8
 
 # Compile the library together with your custom source
 $ make -j 2 # Do not use more cores, this will cause errors
