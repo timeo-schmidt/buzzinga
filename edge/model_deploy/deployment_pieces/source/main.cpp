@@ -7,9 +7,13 @@
 #include <sys/stat.h>
 #include <unistd.h>
 #include <signal.h>
+#include <chrono>
+#include <sys/time.h>
+#include <ctime>
 #define PY_SSIZE_T_CLEAN
 #include <Python.h>
 #include <alsa/asoundlib.h>
+
 
 #include "edge-impulse-sdk/classifier/ei_run_classifier.h"
 
@@ -17,9 +21,11 @@
 int get_microphone_data(size_t offset, size_t length, float *out_ptr);
 
 #define SLICE_LENGTH_MS      250        // 4 inferences per second
-#define SLICE_LENGTH_VALUES  (EI_CLASSIFIER_RAW_SAMPLE_COUNT / (1000 / SLICE_LENGTH_MS))
+#define SLICE_LENGTH_VALUES  (EI_CLASSIFIER_RAW_SAMPLE_COUNT / (500 / SLICE_LENGTH_MS))
 
 static bool use_debug = false; // Set this to true to see features generated from the raw signal
+bool sentMessage = false;
+time_t lastDetection = 0;
 
 static int16_t classifier_buffer[EI_CLASSIFIER_RAW_SAMPLE_COUNT * sizeof(int16_t)]; // full classifier buffer
 
@@ -165,17 +171,7 @@ void classify_buffer(){
     // Perform DSP pre-processing and inference
     res = run_classifier(&signal, &result, false);
 
-    /*
-    // Print return code and how long it took to perform inference
-    printf("run_classifier returned: %d\r\n", res);
-    printf("Timing: DSP %d ms, inference %d ms, anomaly %d ms\r\n",
-        result.timing.dsp,
-        result.timing.classification,
-        result.timing.anomaly); 
-    */
-
     // Print the prediction results (classification)
-    //printf("Predictions:\r\n");
     printf("%d ms. ", result.timing.dsp + result.timing.classification);
     for (size_t i = 0; i < EI_CLASSIFIER_LABEL_COUNT; i++) {
         printf("%s: %.05f", result.classification[i].label, result.classification[i].value);
@@ -184,37 +180,59 @@ void classify_buffer(){
         }
 
         if (result.classification[i].value >= 0.9 && ei_classifier_inferencing_categories[i] == "dong"){
+            time_t currentTime = time(nullptr);
+
+            if((currentTime - lastDetection) >= 30){
+                sentMessage = false;
+                printf("Sent message: %d \n", (currentTime - lastDetection));
+            }
+
+            if(!sentMessage){
             printf("\n");
-            printf("begin... \n");
+            printf("Begin sending \n");
             Py_Initialize();
             char filename[] = "FCM_dong.py";
             FILE* fp;
             // Open the file, and run it
             fp = _Py_fopen(filename, "r");
             PyRun_SimpleFile(fp, filename);
-            printf("...closing \n");
+            printf("Notification sent \n");
             //Close the python instance
             Py_Finalize();
+
+            sentMessage = true;
+            }
+
+            lastDetection = currentTime;
 
         }
         else if(result.classification[i].value >= 0.9 && ei_classifier_inferencing_categories[i] == "firealarm"){
-            printf("\n");
-            printf("begin... \n");
-            Py_Initialize();
-            char filename[] = "FCM_firealarm.py";
-            FILE* fp;
-            // Open the file, and run it
-            fp = _Py_fopen(filename, "r");
-            PyRun_SimpleFile(fp, filename);
-            printf("...closing \n");
-            //Close the python instance
-            Py_Finalize();
+            time_t currentTime = time(nullptr);
 
-        }/*else if(result.classification[i].value >= 0.9 && ei_classifier_inferencing_categories[i] == "noise"){
-            printf("  %s: ", ei_classifier_inferencing_categories[i]);
-            printf("%.5f\r\n", result.classification[i].value);
-        }*/
-        
+            if((currentTime - lastDetection) >= 30){
+                sentMessage = false;
+                printf("Sent message: %d \n", (currentTime - lastDetection));
+            }
+
+            if(!sentMessage){
+                printf("\n");
+                printf("Begin sending \n");
+                Py_Initialize();
+                char filename[] = "FCM_firealarm.py";
+                FILE* fp;
+                // Open the file, and run it
+                fp = _Py_fopen(filename, "r");
+                PyRun_SimpleFile(fp, filename);
+                printf("Notification Sent \n");
+                //Close the python instance
+                Py_Finalize();
+
+                sentMessage = true;
+            }
+
+            lastDetection = currentTime;
+
+        }
     }
 
     // Print anomaly result (if it exists)
@@ -242,10 +260,16 @@ int main(int argc, char **argv) {
 
     while (1) {
         int x = snd_pcm_readi(capture_handle, slice_buffer, SLICE_LENGTH_VALUES);
+		if (x ==-EPIPE){
+			snd_pcm_prepare(capture_handle);
+			x=snd_pcm_readi(capture_handle,slice_buffer, SLICE_LENGTH_VALUES);
+			if (x<0) printf("Failed to read audio data (%d)\n", x);
+		}
+        /*
         if (x != SLICE_LENGTH_VALUES) {
             printf("Failed to read audio data (%d)\n", x);
             return 1;
-        }
+        }*/
 
         // 1. roll -SLICE_LENGTH_VALUES here
         numpy::roll(classifier_buffer, EI_CLASSIFIER_RAW_SAMPLE_COUNT, -SLICE_LENGTH_VALUES);
@@ -260,8 +284,7 @@ int main(int argc, char **argv) {
         }
 
         // 3. Classify
-        classify_buffer();
-
+        classify_buffer ();
     }
 
     close_alsa(0);
