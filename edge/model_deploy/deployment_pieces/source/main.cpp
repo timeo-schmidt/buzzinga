@@ -21,7 +21,7 @@
 int get_microphone_data(size_t offset, size_t length, float *out_ptr);
 
 #define SLICE_LENGTH_MS      250        // 4 inferences per second
-#define SLICE_LENGTH_VALUES  (EI_CLASSIFIER_RAW_SAMPLE_COUNT / (500 / SLICE_LENGTH_MS))
+#define SLICE_LENGTH_VALUES  (EI_CLASSIFIER_RAW_SAMPLE_COUNT / (1000 / SLICE_LENGTH_MS))
 
 static bool use_debug = false; // Set this to true to see features generated from the raw signal
 bool sentMessage = false;
