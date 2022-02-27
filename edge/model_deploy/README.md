@@ -21,7 +21,7 @@ $ sudo apt-get install libasound2
 $ cp -R ./deployment_pieces/* ./buzzinga-project-1-v5/
 
 # Add the python scripts for Firebase Cloud Messaging to the project
-$ cp -R ./FSM_notifications/* ./buzzinga-project-1-v5/
+$ cp -R ./FCM_notifications/* ./buzzinga-project-1-v5/
 
 # Make sure to install the requests library in order to execute HTTP requests
 # by running:       
