@@ -182,7 +182,7 @@ void classify_buffer(){
         if (result.classification[i].value >= 0.9 && ei_classifier_inferencing_categories[i] == "dong"){
             time_t currentTime = time(nullptr);
 
-            if((currentTime - lastDetection) >= 30){
+            if((currentTime - lastDetection) >= 20){
                 sentMessage = false;
                 printf("Sent message: %d \n", (currentTime - lastDetection));
             }
