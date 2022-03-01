@@ -12,11 +12,11 @@
 
 ## Authors
 
-- Tanguy
+- [Tanguy](http://github.com/tlp19/)
 
-- Daniel
+- [Daniel](http://github.com/danieljohnromano/)
 
-- Riccardo
+- [Riccardo](http://github.com/rccrd27/)
 
 - [Timeo](http://github.com/timeo-schmidt/)
 
