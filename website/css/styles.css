@@ -62,6 +62,7 @@
   --bs-body-line-height: 1.5;
   --bs-body-color: #212529;
   --bs-body-bg: #fff;
+	--plyr-video-background: #fff;
 }
 
 *,
@@ -11407,8 +11408,8 @@ section {
 
 section.cta {
   position: relative;
-  padding: 15rem 0;
-  background-image: url("https://source.unsplash.com/5g41N3uRPf8/1500x800");
+  padding: 30rem 0;
+  background-image: url("../assets/img/device_package.png");
   background-position: center;
   background-size: cover;
 }
@@ -11628,4 +11629,40 @@ footer a:hover, footer a:active, footer a:focus {
 
 .app-gif {
 	width: 100%;
+}
+
+.centered {
+	display: block;
+	margin: 0 auto;
+	text-align: center;
+}
+
+.spec-text {
+	font-size: 4em;
+	font-style: normal;
+}
+
+
+
+.video {
+}
+
+.video-player {
+	width: 800px;
+	display: block;
+	margin: 0 auto;
+	margin-top: -8em;
+	margin-bottom: 5em;
+}
+
+.plyr {
+	border-radius: 1em;
+}
+
+.plyr--full-ui.plyr--video .plyr__control--overlaid {
+
+}
+
+.plyr__controls {
+	display: none !important;
 }

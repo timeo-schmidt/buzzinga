@@ -16,6 +16,10 @@
         <link href="https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,400;1,400&amp;display=swap" rel="stylesheet" />
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="css/styles.css" rel="stylesheet" />
+			
+				<link rel="stylesheet" href="https://cdn.plyr.io/3.6.12/plyr.css" />
+
+
     </head>
     <body id="page-top">
         <!-- Navigation-->
@@ -50,7 +54,7 @@
                         <!-- Mashead text and app badges-->
                         <div class="mb-5 mb-lg-0 text-center text-lg-start">
                             <h1 class="display-1 lh-1 mb-3">Hear the things that matter.</h1>
-                            <p class="lead fw-normal text-muted mb-5">Were you listening to your favourite music and missed the doorbell ringing? Never miss an important sound again with Notisound!</p>
+                            <p class="lead fw-normal text-muted mb-5">Were you listening to your favourite music and missed the doorbell ringing? Never miss an important sound again with NotiSound!</p>
                         </div>
                     </div>
                     <div class="col-lg-6">
@@ -61,10 +65,16 @@
         </header>
         <!-- Quote/testimonial aside-->
         <aside class="text-center bg-gradient-primary-to-secondary">
+						<div class="video-player shadow-lg">
+							<video id="player" playsinline controls data-poster="assets/img/poster_video.png">
+								<source src="assets/video/Notisound.mp4" type="video/mp4" />
+								<source src="assets/video/Notisound.mp4" type="assets/" />
+							</video>
+						</div>
             <div class="container px-5">
                 <div class="row gx-5 justify-content-center">
                     <div class="col-xl-8">
-                        <div class="h2 fs-1 text-white mb-4">"Never miss a sound again with Notisound."</div>
+                        <div class="h2 fs-1 text-white mb-4">"Never miss a sound again with NotiSound."</div>
                     </div>
                 </div>
             </div>
@@ -144,12 +154,49 @@
         <section class="bg-light">
             <div class="container px-5">
                 <div class="row gx-5 align-items-center justify-content-center justify-content-lg-between">
-                    <div class="col-12 col-lg-5">
-                        <h2 class="display-4 lh-1 mb-4">Enter a new age of web design</h2>
-                        <p class="lead fw-normal text-muted mb-5 mb-lg-0">This section is perfect for featuring some information about your application, why it was built, the problem it solves, or anything else! There's plenty of space for text here, so don't worry about writing too much.</p>
+                    <div class="col-12 col-lg-7">
+                        <h2 class="display-4 lh-1 mb-4">Always listening, so you don't have to.</h2>
+                        <p class="lead fw-normal text-muted mb-5 mb-lg-0">Our state-of-the art audio classification algorithms use advanced machine learning models to constantly classify sounds they pick up. All processing is done directly on the device and is never sent across the internet. Absolute privacy guaranteed!</p>
                     </div>
-                    <div class="col-sm-8 col-md-6">
-                        <div class="px-5 px-sm-0"><img class="img-fluid rounded-circle" src="https://source.unsplash.com/u8Jn2rzYIps/900x900" alt="..." /></div>
+                    <div class="col-12 col-lg-5 centered">
+                        <div class="px-5 px-sm-0"><img class="img-fluid rounded-circle" src="assets/img/spectrogram.png" alt="..." /></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+			  <!-- Key specs-->
+        <section id="features">
+            <div class="container px-5">
+                <div class="row gx-5 align-items-center">
+                    <div class="col-lg-12 order-lg-1 mb-5 mb-lg-0">
+                        <div class="container-fluid px-5">
+                            <div class="row gx-5">
+                                <div class="col-md-4 mb-5">
+                                    <!-- Feature item-->
+                                    <div class="text-center">
+                                        <i class="spec-text text-gradient d-block mb-3">&gt;98%</i>
+                                        <h3 class="font-alt">Accuracy</h3>
+                                        <p class="text-muted mb-0">Very high performing convolutional neural network for sound classification. Average F1 score on representative test set.</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 mb-5">
+                                    <!-- Feature item-->
+                                    <div class="text-center">
+                                        <i class="spec-text text-gradient d-block mb-3">700mW</i>
+                                        <h3 class="font-alt">Power Consumption</h3>
+                                        <p class="text-muted mb-0">Our device consumes does all the hard work and consumes as much power as your switched-off TV.</p>
+                                    </div>
+                                </div>
+															  <div class="col-md-4 mb-5 mb-md-0">
+                                    <!-- Feature item-->
+                                    <div class="text-center">
+                                        <i class="spec-text text-gradient d-block mb-3">25k</i>
+                                        <h3 class="font-alt">Training Samples</h3>
+                                        <p class="text-muted mb-0">Our classifier has learned from over 25 thousands samples of sample data of door bell and fire alarm sounds.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -159,11 +206,10 @@
             <div class="cta-content">
                 <div class="container px-5">
                     <h2 class="text-white display-1 lh-1 mb-4">
-                        Stop waiting.
-                        <br />
-                        Start building.
+                        NotiSound
+                        <br/>
+												Pre-order now.
                     </h2>
-                    <a class="btn btn-outline-light py-3 px-4 rounded-pill" href="https://startbootstrap.com/theme/new-age" target="_blank">Download for free</a>
                 </div>
             </div>
         </section>
@@ -190,80 +236,24 @@
                 </div>
             </div>
         </footer>
-        <!-- Feedback Modal-->
-        <div class="modal fade" id="feedbackModal" tabindex="-1" aria-labelledby="feedbackModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header bg-gradient-primary-to-secondary p-4">
-                        <h5 class="modal-title font-alt text-white" id="feedbackModalLabel">Send feedback</h5>
-                        <button class="btn-close btn-close-white" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body border-0 p-4">
-                        <!-- * * * * * * * * * * * * * * *-->
-                        <!-- * * SB Forms Contact Form * *-->
-                        <!-- * * * * * * * * * * * * * * *-->
-                        <!-- This form is pre-integrated with SB Forms.-->
-                        <!-- To make this form functional, sign up at-->
-                        <!-- https://startbootstrap.com/solution/contact-forms-->
-                        <!-- to get an API token!-->
-                        <form id="contactForm" data-sb-form-api-token="API_TOKEN">
-                            <!-- Name input-->
-                            <div class="form-floating mb-3">
-                                <input class="form-control" id="name" type="text" placeholder="Enter your name..." data-sb-validations="required" />
-                                <label for="name">Full name</label>
-                                <div class="invalid-feedback" data-sb-feedback="name:required">A name is required.</div>
-                            </div>
-                            <!-- Email address input-->
-                            <div class="form-floating mb-3">
-                                <input class="form-control" id="email" type="email" placeholder="name@example.com" data-sb-validations="required,email" />
-                                <label for="email">Email address</label>
-                                <div class="invalid-feedback" data-sb-feedback="email:required">An email is required.</div>
-                                <div class="invalid-feedback" data-sb-feedback="email:email">Email is not valid.</div>
-                            </div>
-                            <!-- Phone number input-->
-                            <div class="form-floating mb-3">
-                                <input class="form-control" id="phone" type="tel" placeholder="(123) 456-7890" data-sb-validations="required" />
-                                <label for="phone">Phone number</label>
-                                <div class="invalid-feedback" data-sb-feedback="phone:required">A phone number is required.</div>
-                            </div>
-                            <!-- Message input-->
-                            <div class="form-floating mb-3">
-                                <textarea class="form-control" id="message" type="text" placeholder="Enter your message here..." style="height: 10rem" data-sb-validations="required"></textarea>
-                                <label for="message">Message</label>
-                                <div class="invalid-feedback" data-sb-feedback="message:required">A message is required.</div>
-                            </div>
-                            <!-- Submit success message-->
-                            <!---->
-                            <!-- This is what your users will see when the form-->
-                            <!-- has successfully submitted-->
-                            <div class="d-none" id="submitSuccessMessage">
-                                <div class="text-center mb-3">
-                                    <div class="fw-bolder">Form submission successful!</div>
-                                    To activate this form, sign up at
-                                    <br />
-                                    <a href="https://startbootstrap.com/solution/contact-forms">https://startbootstrap.com/solution/contact-forms</a>
-                                </div>
-                            </div>
-                            <!-- Submit error message-->
-                            <!---->
-                            <!-- This is what your users will see when there is-->
-                            <!-- an error submitting the form-->
-                            <div class="d-none" id="submitErrorMessage"><div class="text-center text-danger mb-3">Error sending message!</div></div>
-                            <!-- Submit Button-->
-                            <div class="d-grid"><button class="btn btn-primary rounded-pill btn-lg disabled" id="submitButton" type="submit">Submit</button></div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
         <!-- Bootstrap core JS-->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
         <!-- Core theme JS-->
         <script src="js/scripts.js"></script>
-        <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
-        <!-- * *                               SB Forms JS                               * *-->
-        <!-- * * Activate your form at https://startbootstrap.com/solution/contact-forms * *-->
-        <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
-        <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
+
+				<script src="https://cdn.plyr.io/3.6.12/plyr.js"></script>
+
+				<script>
+						document.addEventListener('DOMContentLoaded', () => {
+							// Controls (as seen below) works in such a way that as soon as you explicitly define (add) one control
+							// to the settings, ALL default controls are removed and you have to add them back in by defining those below.
+							// For example, let's say you just simply wanted to add 'restart' to the control bar in addition to the default.
+							// Once you specify *just* the 'restart' property below, ALL of the controls (progress bar, play, speed, etc) will be removed,
+							// meaning that you MUST specify 'play', 'progress', 'speed' and the other default controls to see them again.
+								 const controls = ['progress'];
+							const player = new Plyr('#player');
+					});
+			</script>
+
     </body>
 </html>
