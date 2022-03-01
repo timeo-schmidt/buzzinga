@@ -30,7 +30,7 @@
 
 - **[raspi_sd_image](raspi_sd_image/)**: This folder contains a custom SD image to get new edge devices running
 
-- **[website](raspi_sd_image/)**: This folder contains all the code needed to create the website
+- **[website](website/)**: This folder contains all the code needed to create the website
 
 ## 
 
