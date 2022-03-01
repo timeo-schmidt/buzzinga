@@ -1,9 +1,10 @@
 # Mobile app
 
-## General ressources
+## Codebase location
 
-You can find in this folder general ressources about how to communicate and send data to the mobile app.
+The written codebase of the app is all located in [./return_success_4_app/lib](./return_success_4_app/lib)
 
-## App codebase
+## Initial repository of the app
 
-The app codebase is available to review in [this GitHub repository](https://github.com/tlp19/return_success_4_app)
+Please find below the original GitHub repository of the app:
+[Original GitHub repository](https://github.com/tlp19/return_success_4_app)
