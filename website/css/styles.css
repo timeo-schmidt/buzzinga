@@ -11667,3 +11667,13 @@ footer a:hover, footer a:active, footer a:focus {
 .plyr__controls {
 	display: none !important;
 }
+.link {
+	text-decoration: underline;
+	color: black;
+	font-weight: bold;
+}
+
+.link:hover {
+	font-style: italic;
+	color: black;
+}
