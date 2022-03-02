@@ -13,8 +13,6 @@
 #define PY_SSIZE_T_CLEAN
 #include <Python.h>
 #include <alsa/asoundlib.h>
-
-
 #include "edge-impulse-sdk/classifier/ei_run_classifier.h"
 
 // Callback function declaration
@@ -24,8 +22,9 @@ int get_microphone_data(size_t offset, size_t length, float *out_ptr);
 #define SLICE_LENGTH_VALUES  (EI_CLASSIFIER_RAW_SAMPLE_COUNT / (1000 / SLICE_LENGTH_MS))
 
 static bool use_debug = false; // Set this to true to see features generated from the raw signal
-bool sentMessage = false;
-time_t lastDetection = 0;
+
+bool sentMessage = false;      // Sent Message flag initialised as false
+time_t lastDetection = 0;      // Initialise last detected sound as zero
 
 static int16_t classifier_buffer[EI_CLASSIFIER_RAW_SAMPLE_COUNT * sizeof(int16_t)]; // full classifier buffer
 
@@ -152,15 +151,16 @@ int init_alsa(bool debug = false) {
     return 0;
 }
 
+// Close PCM handle
 void close_alsa(int signum) {
     snd_pcm_drop(capture_handle);
     snd_pcm_close(capture_handle);
     exit(0);
 }
 
-
+// Classification of buffer
 void classify_buffer(){
-    signal_t signal;
+    signal_t signal;                     // Wrapper for raw input buffer
     ei_impulse_result_t result = { 0 };  // Used to store inference output
     EI_IMPULSE_ERROR res;                // Return code from inference
 
@@ -179,57 +179,71 @@ void classify_buffer(){
             printf(", ");
         }
 
+        // If input is classified as Doorbell, notify the user
         if (result.classification[i].value >= 0.9 && ei_classifier_inferencing_categories[i] == "dong"){
-            time_t currentTime = time(nullptr);
+            time_t currentTime = time(nullptr);     // get current time of program 
 
-            if((currentTime - lastDetection) >= 20){
+            // If the last detection was more than 15 seconds ago, it is likely
+            // that the current detection is related to a different doorbell instance 
+            if((currentTime - lastDetection) >= 15){
                 sentMessage = false;
-                printf("Sent message: %d \n", (currentTime - lastDetection));
+                printf("Time since last detection: %d s \n", (currentTime - lastDetection));
             }
 
-            if(!sentMessage){
-            printf("\n");
-            printf("Begin sending \n");
-            Py_Initialize();
-            char filename[] = "FCM_dong.py";
-            FILE* fp;
-            // Open the file, and run it
-            fp = _Py_fopen(filename, "r");
-            PyRun_SimpleFile(fp, filename);
-            printf("Notification sent \n");
-            //Close the python instance
-            Py_Finalize();
-
-            sentMessage = true;
-            }
-
-            lastDetection = currentTime;
-
-        }
-        else if(result.classification[i].value >= 0.9 && ei_classifier_inferencing_categories[i] == "firealarm"){
-            time_t currentTime = time(nullptr);
-
-            if((currentTime - lastDetection) >= 30){
-                sentMessage = false;
-                printf("Sent message: %d \n", (currentTime - lastDetection));
-            }
-
+            // If message has not been sent yet (in the last 15 seconds, according to previous checks)
             if(!sentMessage){
                 printf("\n");
-                printf("Begin sending \n");
+                printf("Begin sending doorbell notification\n");
+                // Initialize the python instance
                 Py_Initialize();
-                char filename[] = "FCM_firealarm.py";
+                char filename[] = "FCM_dong.py";
                 FILE* fp;
-                // Open the file, and run it
+                // Open the file, and run it: send message to the Notisound app
                 fp = _Py_fopen(filename, "r");
                 PyRun_SimpleFile(fp, filename);
-                printf("Notification Sent \n");
+                printf("Message sent \n");
                 //Close the python instance
                 Py_Finalize();
 
+                // set flag to true in order to not send another notification until the doorbell finishes ringing
                 sentMessage = true;
             }
 
+            // once the checks are performed, set lastDetection time to be now
+            lastDetection = currentTime;
+
+        }
+        // If input is classified as Fire Alarm, notify the user
+        else if(result.classification[i].value >= 0.9 && ei_classifier_inferencing_categories[i] == "firealarm"){
+            time_t currentTime = time(nullptr);     // get current time of program 
+
+            // If the last detection was more than 30 seconds ago, it is likely
+            // that the current detection is related to ta different fire alarm instance 
+            if((currentTime - lastDetection) >= 30){
+                sentMessage = false;
+                printf("Time since last detection: %d s \n", (currentTime - lastDetection));
+            }
+
+            // If message has not been sent yet (in the last 30 seconds, according to previous checks)
+            if(!sentMessage){
+                printf("\n");
+                printf("Begin sending fire alarm notification \n");
+                // Initialize the python instance
+                Py_Initialize();
+                char filename[] = "FCM_firealarm.py";
+                FILE* fp;
+                // Open the file, and run it: send message to the Notisound app
+                fp = _Py_fopen(filename, "r");
+                PyRun_SimpleFile(fp, filename);
+                printf("Message Sent \n");
+                // Close the python instance
+                Py_Finalize();
+
+                // set flag to true in order to not send another notification until the fire alarm finishes ringing
+                sentMessage = true;     
+            }
+
+            // once the checks are performed, set lastDetection time to be now
             lastDetection = currentTime;
 
         }
@@ -246,30 +260,31 @@ void classify_buffer(){
 
 int main(int argc, char **argv) {
 
+    // Specify ID of the USB microphone
     card = "plughw:1,0";
 
+    // Check that features generated from the raw signal are wroking 
     if (init_alsa(use_debug) != 0) {
         exit(1);
     }
 
+    // External interruption of the active signal
     signal(SIGINT, close_alsa);
 
-    // allocate buffers for the slice
+    // Allocate buffers for the slice
     int16_t slice_buffer[SLICE_LENGTH_VALUES * sizeof(int16_t)];
     uint32_t classify_count = 0;
 
+    // Run infinite loop to continously classify detected sounds, interupted by the user by pressing Ctrl+C
     while (1) {
+        // Read interleaved frames from a Pulso Code Modulated signal and returns a positive number of frames actually read
         int x = snd_pcm_readi(capture_handle, slice_buffer, SLICE_LENGTH_VALUES);
+        // if an overrun occured, prepare the PCM handle and retry to read it with snd_pcm_readi()
 		if (x ==-EPIPE){
 			snd_pcm_prepare(capture_handle);
 			x=snd_pcm_readi(capture_handle,slice_buffer, SLICE_LENGTH_VALUES);
 			if (x<0) printf("Failed to read audio data (%d)\n", x);
 		}
-        /*
-        if (x != SLICE_LENGTH_VALUES) {
-            printf("Failed to read audio data (%d)\n", x);
-            return 1;
-        }*/
 
         // 1. roll -SLICE_LENGTH_VALUES here
         numpy::roll(classifier_buffer, EI_CLASSIFIER_RAW_SAMPLE_COUNT, -SLICE_LENGTH_VALUES);
@@ -278,12 +293,12 @@ int main(int argc, char **argv) {
         const size_t classifier_buffer_offset = EI_CLASSIFIER_RAW_SAMPLE_COUNT - SLICE_LENGTH_VALUES;
         memcpy(classifier_buffer + classifier_buffer_offset, slice_buffer, SLICE_LENGTH_VALUES * sizeof(int16_t));
 
-        // ignore the first N slices we classify, we don't have a complete frame yet
+        // If a complete frame is not yet obtained, ignore the first N slices we classify
         if (++classify_count < EI_CLASSIFIER_RAW_SAMPLE_COUNT / SLICE_LENGTH_VALUES) {
             continue;
         }
 
-        // 3. Classify
+        // 3. Classify the current buffer
         classify_buffer ();
     }
 
