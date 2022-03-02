@@ -1,3 +1,3 @@
 #!/bin/sh
 
-rm ~/buzzinga/edge/data_collection/local_data/*
+rm ~/buzzinga/node_device/data_collection/local_data/*
