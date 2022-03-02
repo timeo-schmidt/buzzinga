@@ -1,4 +1,4 @@
-# Buzzinga
+# NotiSound
 
 ##### Embedded Systems Course
 
