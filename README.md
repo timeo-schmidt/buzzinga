@@ -4,11 +4,7 @@
 
 🔔 🙉 Get notified of sounds around you
 
-
-
 ---
-
-
 
 ## Authors
 
@@ -20,7 +16,23 @@
 
 - [Timeo](http://github.com/timeo-schmidt/)
 
+##
 
+## Check out our Website: [notisound.waqua.xyz](notisound.waqua.xyz)
+
+- You'll find a feature and project overview
+
+- .... and an advertisement video
+
+##
+
+## Technology Demonstration
+
+<a href="https://youtu.be/70v0xNBIKIo">
+    <img src="website/assets/img/video_readme_thumbnail.png">
+    <br>
+    Click to watch the demo now!
+</a>
 
 ## Repository structure
 
@@ -28,11 +40,9 @@
 
 - **[mobile_app](mobile_app/)**: This folder contains all our files for the mobile app
 
-- **[raspi_sd_image](raspi_sd_image/)**: This folder contains a custom SD image to get new edge devices running
-
 - **[website](website/)**: This folder contains all the code needed to create the website
 
-## 
+##
 
 ## Getting Started
 
@@ -46,5 +56,4 @@ git clone https://github.com/timeo-schmidt/buzzinga.git
     # 3) Connect the Pi to WiFi
         raspi-config
     # 3) ... start the node ...
-
 ```
