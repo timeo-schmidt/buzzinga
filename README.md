@@ -6,6 +6,37 @@
 
 ---
 
+
+## Repository structure
+
+- **[node_device](node_device/)**: This folder contains all the code that is running on our IoT edge device (Raspberry Pi Zero).
+
+- **[edge_impulse](edge_impulse/)**: This folder contains the custom dataset used for training, as well as a presentation on the Edge Impule ML pipeline.
+
+- **[mobile_app](mobile_app/)**: This folder contains all our files for the mobile app.
+
+- **[website](website/)**: This folder contains all the code needed to create the website.
+
+##
+
+<br/>
+
+## Check out our Website: [notisound.waqua.xyz](http://notisound.waqua.xyz/)
+
+You'll find there a feature and project overview as well as the **advertising/marketing video**.
+
+For a more **technical demonstration**, similar to the one done in the poster session, you can watch the following video:
+
+<a href="https://youtu.be/70v0xNBIKIo">
+    <img src="website/assets/img/video_readme_thumbnail.png">
+    <br>
+    Click to watch the technical demo
+</a>
+
+##
+
+<br/>
+
 ## Authors
 
 - [Tanguy](http://github.com/tlp19/)
@@ -18,42 +49,5 @@
 
 ##
 
-## Check out our Website: [notisound.waqua.xyz](http://notisound.waqua.xyz/)
 
-- You'll find a feature and project overview
 
-- .... and an advertisement video
-
-##
-
-## Technology Demonstration
-
-<a href="https://youtu.be/70v0xNBIKIo">
-    <img src="website/assets/img/video_readme_thumbnail.png">
-    <br>
-    Click to watch the demo now!
-</a>
-
-## Repository structure
-
-- **[edge](edge/)**: This folder contains all the code that is running on our IoT edge device (Raspberry Pi Zero)
-
-- **[mobile_app](mobile_app/)**: This folder contains all our files for the mobile app
-
-- **[website](website/)**: This folder contains all the code needed to create the website
-
-##
-
-## Getting Started
-
-```bash
-# Clone this repository
-git clone https://github.com/timeo-schmidt/buzzinga.git
-
-# To set up a node
-    # 1) Flash the sd image from raspi_sd_image/ onto a Pi Zero
-    # 2) Log in using the default credentials
-    # 3) Connect the Pi to WiFi
-        raspi-config
-    # 3) ... start the node ...
-```
