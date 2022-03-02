@@ -288,10 +288,10 @@ int main(int argc, char **argv) {
 			if (x<0) printf("Failed to read audio data (%d)\n", x);
 		}
 
-        // 1. Roll -SLICE_LENGTH_VALUES here
+        // 1. Roll -SLICE_LENGTH_VALUES
         numpy::roll(classifier_buffer, EI_CLASSIFIER_RAW_SAMPLE_COUNT, -SLICE_LENGTH_VALUES);
 
-        // 2. Copy slice buffer to the end
+        // 2. Copy slice buffer to the end of the buffer
         const size_t classifier_buffer_offset = EI_CLASSIFIER_RAW_SAMPLE_COUNT - SLICE_LENGTH_VALUES;
         memcpy(classifier_buffer + classifier_buffer_offset, slice_buffer, SLICE_LENGTH_VALUES * sizeof(int16_t));
 
