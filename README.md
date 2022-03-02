@@ -18,7 +18,7 @@
 
 ##
 
-## Check out our Website: [notisound.waqua.xyz](notisound.waqua.xyz)
+## Check out our Website: [notisound.waqua.xyz](http://notisound.waqua.xyz/)
 
 - You'll find a feature and project overview
 
