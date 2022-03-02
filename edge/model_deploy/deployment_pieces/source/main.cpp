@@ -21,7 +21,7 @@ int get_microphone_data(size_t offset, size_t length, float *out_ptr);
 #define SLICE_LENGTH_MS      250        // 4 inferences per second
 #define SLICE_LENGTH_VALUES  (EI_CLASSIFIER_RAW_SAMPLE_COUNT / (1000 / SLICE_LENGTH_MS))
 
-static bool use_debug = false; // Set this to true to see features generated from the raw signal
+static bool alsa_debug = false; // Set this to true to see features generated from the raw signal
 
 bool sentMessage = false;      // Sent Message flag initialised as false
 time_t lastDetection = 0;      // Initialise last detected sound as zero
@@ -38,9 +38,11 @@ static char *card;
 // Initialize the alsa library
 int init_alsa(bool debug = false) {
     int err;
-
     snd_pcm_hw_params_t *hw_params;
 
+    // One of the parameters is the sound device (capture_handle), 
+    // into which we will pass the device ID "plughw:0,0" (the default sound device) 
+    // and a constant that tells the device we want to use it for stream cpature.
     if ((err = snd_pcm_open(&capture_handle, card, SND_PCM_STREAM_CAPTURE, 0)) < 0) {
         fprintf(stderr, "cannot open audio device %s (%s)\n",
                 card,
@@ -264,7 +266,7 @@ int main(int argc, char **argv) {
     card = "plughw:1,0";
 
     // Check that features generated from the raw signal are wroking 
-    if (init_alsa(use_debug) != 0) {
+    if (init_alsa(alsa_debug) != 0) {
         exit(1);
     }
 
@@ -279,17 +281,17 @@ int main(int argc, char **argv) {
     while (1) {
         // Read interleaved frames from a Pulso Code Modulated signal and returns a positive number of frames actually read
         int x = snd_pcm_readi(capture_handle, slice_buffer, SLICE_LENGTH_VALUES);
-        // if an overrun occured, prepare the PCM handle and retry to read it with snd_pcm_readi()
+        // if an overrun occured, prepare the audio interface retry to read it with snd_pcm_readi()
 		if (x ==-EPIPE){
 			snd_pcm_prepare(capture_handle);
 			x=snd_pcm_readi(capture_handle,slice_buffer, SLICE_LENGTH_VALUES);
 			if (x<0) printf("Failed to read audio data (%d)\n", x);
 		}
 
-        // 1. roll -SLICE_LENGTH_VALUES here
+        // 1. Roll -SLICE_LENGTH_VALUES here
         numpy::roll(classifier_buffer, EI_CLASSIFIER_RAW_SAMPLE_COUNT, -SLICE_LENGTH_VALUES);
 
-        // 2. copy slice buffer to the end
+        // 2. Copy slice buffer to the end
         const size_t classifier_buffer_offset = EI_CLASSIFIER_RAW_SAMPLE_COUNT - SLICE_LENGTH_VALUES;
         memcpy(classifier_buffer + classifier_buffer_offset, slice_buffer, SLICE_LENGTH_VALUES * sizeof(int16_t));
 
