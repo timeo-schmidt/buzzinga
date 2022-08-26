@@ -44,7 +44,7 @@ For a more **technical demonstration**, similar to the one done in the poster se
 
 - [Daniel](http://github.com/danieljohnromano/)
 
-- [Riccardo](http://github.com/rccrd27/)
+- [Riccardo](http://github.com/riccardo927/)
 
 - [Timeo](http://github.com/timeo-schmidt/)
 
